@@ -36,6 +36,8 @@ from products.views import (
         CategoryRetrieveAPIView,
         ProductListAPIView,
         ProductRetrieveAPIView,
+        HomeCategoryListAPIView,
+        HomeCategoryRetrieveAPIView
     )
 
 
@@ -83,8 +85,8 @@ urlpatterns += [
     path('api/categories/', CategoryListAPIView.as_view(), name='categories_api'),
     path('api/categories/<int:pk>/', CategoryRetrieveAPIView.as_view(), name='category_detail_api'),
 
-    path('api/home-categories/', CategoryListAPIView.as_view(), name='homeCategories_api'),
-    path('api/home-categories/<int:pk>/', CategoryRetrieveAPIView.as_view(), name='category_detail_api'),
+    path('api/home-categories/', HomeCategoryListAPIView.as_view(), name='homeCategories_api'),
+    path('api/home-categories/<int:pk>/', HomeCategoryRetrieveAPIView.as_view(), name='homeCategory_detail_api'),
     # path('api/orders/', OrderListAPIView.as_view(), name='orders_api'),
     # path('api/orders/(?P<pk>\d+)/', OrderRetrieveAPIView.as_view(), name='order_detail_api'),
     path('api/products/', ProductListAPIView.as_view(), name='products_api'),

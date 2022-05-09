@@ -194,9 +194,9 @@ class HomeCategoryDetailView(DetailView):
 	def get_context_data(self, *args, **kwargs):
 		context = super(HomeCategoryDetailView, self).get_context_data(*args, **kwargs)
 		obj = self.get_object()
-		product_set = obj.product_set.all()
+		product_home_set = obj.product_home_set.all()
 		default_products = obj.default_category.all()
-		products = ( product_set | default_products ).distinct()
+		products = ( product_home_set | default_products ).distinct()
 		context["products"] = products
 		return context
 

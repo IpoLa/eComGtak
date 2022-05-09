@@ -14,6 +14,6 @@ urlpatterns = [
     path('<str:slug>/', CategoryDetailView.as_view(), name='category_detail'),
 
     path('home-categories/', HomeCategoryListView.as_view(), name='homeCategories'),
-    path('<str:slug>/', HomeCategoryDetailView.as_view(), name='homeCategories_api'),
+    path('<str:slug>/', HomeCategoryDetailView.as_view(), name='homeCategories_detail'),
     # url(r'^(?P<id>\d+)', 'products.views.product_detail_view_func', name='product_detail_function'),
 ]
