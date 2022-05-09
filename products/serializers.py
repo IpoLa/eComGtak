@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 
-from .models import Category, Product, Variation
+from .models import Category, Product, Variation, HomeCategory
 
 
 class VariationSerializer(serializers.ModelSerializer):
@@ -101,6 +101,22 @@ class CategorySerializer(serializers.ModelSerializer):
 			"title",
 			"description",
 			"product_set", ## obj.product_set.all()
+			'CategoryImage',
 			#"default_category",
+		]
 
+
+class HomeCategorySerializer(serializers.ModelSerializer):
+    	# url = serializers.HyperlinkedIdentityField(view_name='category_detail_api')
+	product_set = ProductSerializer(many=True)
+	class Meta:
+		model = HomeCategory
+		fields = [
+			# "url",
+			"id",
+			"title",
+			"description",
+			"product_set", ## obj.product_set.all()
+			'HomeCategoryImage'
+			#"default_category",
 		]

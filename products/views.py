@@ -22,14 +22,19 @@ from rest_framework.views import APIView
 from .filters import ProductFilter
 from .forms import VariationInventoryFormSet, ProductFilterForm
 from .mixins import StaffRequiredMixin
-from .models import Product, Variation, Category
+from .models import Product, Variation, Category, HomeCategory
+from carts.models import Cart, CartItem
+from orders.models import Order
+from accounts.models import Client, Driver
 from .pagination import ProductPagination, CategoryPagination
 from .serializers import (
 		CategorySerializer, 
+		HomeCategorySerializer,
 		ProductSerializer,
-		 ProductDetailSerializer, 
-		 ProductDetailUpdateSerializer
+		ProductDetailSerializer, 
+		ProductDetailUpdateSerializer,
 		)
+
 
 
 
@@ -65,6 +70,34 @@ class APIHomeView(APIView):
 				"count": Category.objects.all().count(),
 				"url": api_reverse("categories_api", request=request)
 			},
+			"homeCategories": {
+				"count": HomeCategory.objects.all().count(),
+				"url": api_reverse("homeCategories_api", request=request)
+			},
+			"carts": {
+				"count": Cart.objects.all().count(),
+				"list": api_reverse("carts_api", request=request),
+				# "detail": api_reverse("cart_detail_api", request=request),
+				"create": api_reverse("cart_create_api", request=request),
+			},
+			"orders": {
+				"count": Order.objects.all().count(),
+				"list": api_reverse("orders_api", request=request),
+				# "detail": api_reverse("order_detail_api", request=request),
+				"create": api_reverse("order_create_api", request=request),
+			},
+			"clients": {
+				"count": Client.objects.all().count(),
+				"list": api_reverse("clients_api", request=request),
+				# "detail": api_reverse("client_detail_api", request=request),
+				"create": api_reverse("client_create_api", request=request)
+			},
+			"drivers": {
+				"count": Driver.objects.all().count(),
+				"url": api_reverse("drivers_api", request=request),
+				# "detail": api_reverse("driver_detail_api", request=request),
+				"create": api_reverse("driver_create_api", request=request)
+			},
 			# "orders": {
 			# 	"url": api_reverse("orders_api", request=request),
 			# }
@@ -85,6 +118,20 @@ class CategoryRetrieveAPIView(generics.RetrieveAPIView):
 	#permission_classes = [IsAuthenticated]
 	queryset = Category.objects.all()
 	serializer_class = CategorySerializer
+
+
+# Home Category APIs
+class HomeCategoryListAPIView(generics.ListAPIView):
+	queryset = HomeCategory.objects.all()
+	serializer_class = HomeCategorySerializer
+	pagination_class = CategoryPagination
+
+
+class HomeCategoryRetrieveAPIView(generics.RetrieveAPIView):
+	#authentication_classes = [SessionAuthentication]
+	#permission_classes = [IsAuthenticated]
+	queryset = HomeCategory.objects.all()
+	serializer_class = HomeCategorySerializer
 
 
 class ProductListAPIView(generics.ListAPIView):
@@ -118,7 +165,7 @@ class ProductRetrieveAPIView(generics.RetrieveAPIView):
 class CategoryListView(ListView):
 	model = Category
 	queryset = Category.objects.all()
-	template_name = "products/product_list.html"
+	template_name = "products/product_list.html" 
 
 
 class CategoryDetailView(DetailView):
@@ -126,6 +173,26 @@ class CategoryDetailView(DetailView):
 
 	def get_context_data(self, *args, **kwargs):
 		context = super(CategoryDetailView, self).get_context_data(*args, **kwargs)
+		obj = self.get_object()
+		product_set = obj.product_set.all()
+		default_products = obj.default_category.all()
+		products = ( product_set | default_products ).distinct()
+		context["products"] = products
+		return context
+
+
+# HCBVs
+class HomeCategoryListView(ListView):
+	model = HomeCategory
+	queryset = HomeCategory.objects.all()
+	template_name = "products/product_list.html" 
+
+
+class HomeCategoryDetailView(DetailView):
+	model = HomeCategory
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(HomeCategoryDetailView, self).get_context_data(*args, **kwargs)
 		obj = self.get_object()
 		product_set = obj.product_set.all()
 		default_products = obj.default_category.all()
