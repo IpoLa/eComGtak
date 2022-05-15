@@ -108,7 +108,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class HomeCategorySerializer(serializers.ModelSerializer):
     	# url = serializers.HyperlinkedIdentityField(view_name='category_detail_api')
-	# product_home_set = ProductSerializer(many=True)
+	product_home_set = ProductSerializer(many=True)
 	class Meta:
 		model = HomeCategory
 		fields = [
@@ -116,7 +116,7 @@ class HomeCategorySerializer(serializers.ModelSerializer):
 			"id",
 			"title",
 			"description",
-			# "product_home_set", ## obj.product_set.all()
+			"product_home_set", ## obj.product_set.all()
 			'homeCategoryImage'
 			#"default_category",
 		]

@@ -21,7 +21,8 @@ class ProductManager(models.Manager):
 	def get_related(self, instance):
 		products_one = self.get_queryset().filter(categories__in=instance.categories.all())
 		products_two = self.get_queryset().filter(default=instance.default)
-		qs = (products_one | products_two).exclude(id=instance.id).distinct()
+		products_three= self.get_queryset().filter(homecategories__in=instance.homecategories.all())
+		qs = (products_one | products_two | products_three).exclude(id=instance.id).distinct()
 		return qs
 
 
@@ -31,6 +32,7 @@ class Product(models.Model):
 	price = models.DecimalField(decimal_places=2, max_digits=20)
 	active = models.BooleanField(default=True)
 	categories = models.ManyToManyField('Category', blank=True)
+	homecategories = models.ManyToManyField('HomeCategory', blank=True)
 	default = models.ForeignKey('Category', related_name='default_category', null=True, blank=True, on_delete=models.CASCADE)
 
 	objects = ProductManager()
