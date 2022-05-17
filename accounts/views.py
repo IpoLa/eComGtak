@@ -8,6 +8,11 @@ from rest_framework.response import Response
 from django.contrib.auth.models import User
 from rest_auth.registration.views import RegisterView
 
+from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token
+
+for user in User.objects.all():
+    Token.objects.get_or_create(user=user)
 
 class CustomClientRegisterView(RegisterView):
     queryset = Client.objects.all()
@@ -15,14 +20,14 @@ class CustomClientRegisterView(RegisterView):
 class ClientAPIView(APIView):
     @staticmethod
     def get(request):
-        clients = Client.objects.all()
+        clients = User.objects.all()
         serializer = ClientSerializer(clients, many=True)
         return Response(serializer.data)
 
 
 class GenericClientAPIView(generics.GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.RetrieveModelMixin, mixins.DestroyModelMixin):
     serializer_class = ClientSerializer
-    queryset = Client.objects.all()
+    queryset = User.objects.all()
 
     lookup_field = 'id'
 

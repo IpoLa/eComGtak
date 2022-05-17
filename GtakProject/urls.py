@@ -39,9 +39,10 @@ from products.views import (
         HomeCategoryListAPIView,
         HomeCategoryRetrieveAPIView
     )
-
+from rest_framework.authtoken import views
 
 urlpatterns = [
+    path('api-token-auth/', views.obtain_auth_token),
     path('admin/', admin.site.urls),
     # path('products/', include('products.urls')),
     path('categories/', include('products.urls_categories')),

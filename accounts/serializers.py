@@ -49,7 +49,7 @@ class ClientDetailUpdateSerializer(serializers.ModelSerializer):
     url = serializers.HyperlinkedIdentityField(view_name='clients_detail_api')
     class Meta:
         model = Client
-        fields = '__all__'
+        fields = ('id', 'username', 'email', 'phone', 'location')
     def create(self, validated_data):
         username = validated_data["username"]
         # Product.objects.get(title=title)

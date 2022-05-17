@@ -80,6 +80,12 @@ class APIHomeView(APIView):
 				# "detail": api_reverse("cart_detail_api", request=request),
 				"create": api_reverse("cart_create_api", request=request),
 			},
+			"cartItems": {
+				"count": CartItem.objects.all().count(),
+				"list": api_reverse("cartItems_api", request=request),
+				# "detail": api_reverse("cart_detail_api", request=request),
+				"create": api_reverse("cartItem_create_api", request=request),
+			},
 			"orders": {
 				"count": Order.objects.all().count(),
 				"list": api_reverse("orders_api", request=request),

@@ -4,19 +4,19 @@ from rest_framework import serializers
 from .models import Category, Product, Variation, HomeCategory
 
 
-class VariationSerializer(serializers.ModelSerializer):
-	class Meta:
-		model = Variation
-		fields = [
-			"id",
-			"title",
-			"price",
-		]
+# class VariationSerializer(serializers.ModelSerializer):
+# 	class Meta:
+# 		model = Variation
+# 		fields = [
+# 			"id",
+# 			"title",
+# 			"price",
+# 		]
 
 
 
 class ProductDetailUpdateSerializer(serializers.ModelSerializer):
-	variation_set = VariationSerializer(many=True, read_only=True)
+	# variation_set = VariationSerializer(many=True, read_only=True)
 	image = serializers.SerializerMethodField()
 	class Meta:
 		model = Product
@@ -26,7 +26,7 @@ class ProductDetailUpdateSerializer(serializers.ModelSerializer):
 			"description",
 			"price",
 			"image",
-			"variation_set",
+			# "variation_set",
 		]
 
 	def get_image(self, obj):
@@ -49,7 +49,7 @@ class ProductDetailUpdateSerializer(serializers.ModelSerializer):
 
 
 class ProductDetailSerializer(serializers.ModelSerializer):
-	variation_set = VariationSerializer(many=True, read_only=True)
+	# variation_set = VariationSerializer(many=True, read_only=True)
 	image = serializers.SerializerMethodField()
 	class Meta:
 		model = Product
@@ -59,7 +59,7 @@ class ProductDetailSerializer(serializers.ModelSerializer):
 			"description",
 			"price",
 			"image",
-			"variation_set",
+			# "variation_set",
 		]
 
 	def get_image(self, obj):
@@ -70,7 +70,7 @@ class ProductDetailSerializer(serializers.ModelSerializer):
 
 class ProductSerializer(serializers.ModelSerializer):
 	# url = serializers.HyperlinkedIdentityField(view_name='products_detail_api')
-	variation_set = VariationSerializer(many=True)
+	# variation_set = VariationSerializer(many=True)
 	image = serializers.SerializerMethodField()
 	class Meta:
 		model = Product
@@ -79,7 +79,7 @@ class ProductSerializer(serializers.ModelSerializer):
 			"id",
 			"title",
 			"image",
-			"variation_set",
+			# "variation_set",
 		]
 
 	def get_image(self, obj):
@@ -108,7 +108,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class HomeCategorySerializer(serializers.ModelSerializer):
     	# url = serializers.HyperlinkedIdentityField(view_name='category_detail_api')
-	product_home_set = ProductSerializer(many=True)
+	# product_home_set = ProductSerializer(many=True)
 	class Meta:
 		model = HomeCategory
 		fields = [
@@ -116,7 +116,7 @@ class HomeCategorySerializer(serializers.ModelSerializer):
 			"id",
 			"title",
 			"description",
-			"product_home_set", ## obj.product_set.all()
+			# "product_home_set", ## obj.product_set.all()
 			'homeCategoryImage'
 			#"default_category",
 		]
