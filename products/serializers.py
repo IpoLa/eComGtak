@@ -120,3 +120,7 @@ class HomeCategorySerializer(serializers.ModelSerializer):
 			'homeCategoryImage'
 			#"default_category",
 		]
+
+
+
+# class SlideSerializer(serializers.ModelSerializer)

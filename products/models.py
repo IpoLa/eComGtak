@@ -173,3 +173,11 @@ class ProductFeatured(models.Model):
 
 	def __unicode__(self):
 		return self.product.title
+
+
+
+class Slide(models.Model):
+	image = models.ImageField(upload_to='slide', blank=True, default='category/default.jpg')
+	def __unicode__(self):
+		return self.id
+

@@ -3,7 +3,7 @@ from django.contrib import admin
 # Register your models here.
 
 
-from .models import Product, Variation, ProductImage, Category,HomeCategory, ProductFeatured
+from .models import Product, Variation, ProductImage, Category,HomeCategory, ProductFeatured, Slide
 
 class ProductImageInline(admin.TabularInline):
 	model = ProductImage
@@ -30,6 +30,7 @@ admin.site.register(Product, ProductAdmin)
 
 
 #admin.site.register(Variation)
+admin.site.register(Slide)
 
 admin.site.register(ProductImage)
 

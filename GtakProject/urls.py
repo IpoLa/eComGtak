@@ -5,7 +5,7 @@ from django.conf.urls import include
 from django.conf.urls.static import static
 from django.contrib import admin
 
-from accounts.views import GenericClientAPIView, ClientAPIView, CustomClientRegisterView, GenericDriverAPIView, DriverAPIView, CustomDriverRegisterView
+from accounts.views import GenericClientAPIView, ClientAPIView, CustomClientRegisterView, GenericDriverAPIView, DriverAPIView, CustomDriverRegisterView, CustomAuthToken
 
 from carts.views import (
         CartAPIView,
@@ -42,7 +42,7 @@ from products.views import (
 from rest_framework.authtoken import views
 
 urlpatterns = [
-    path('api-token-auth/', views.obtain_auth_token),
+    path('api-token-auth/', CustomAuthToken.as_view()),
     path('admin/', admin.site.urls),
     # path('products/', include('products.urls')),
     path('categories/', include('products.urls_categories')),
@@ -93,4 +93,5 @@ urlpatterns += [
     path('api/products/', ProductListAPIView.as_view(), name='products_api'),
     path('api/products/<int:pk>/', ProductRetrieveAPIView.as_view(), name='products_detail_api'),
 ]
-
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
