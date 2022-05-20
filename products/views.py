@@ -22,17 +22,19 @@ from rest_framework.views import APIView
 from .filters import ProductFilter
 from .forms import VariationInventoryFormSet, ProductFilterForm
 from .mixins import StaffRequiredMixin
-from .models import Product, Variation, Category, HomeCategory
+from .models import Product, Variation, Category, HomeCategory, Slide
 from carts.models import Cart, CartItem
 from orders.models import Order
 from accounts.models import Client, Driver
 from .pagination import ProductPagination, CategoryPagination
 from .serializers import (
 		CategorySerializer, 
+		CategoryByProductSerializer,
 		HomeCategorySerializer,
 		ProductSerializer,
 		ProductDetailSerializer, 
 		ProductDetailUpdateSerializer,
+		SlideSerializer
 		)
 
 
@@ -66,9 +68,17 @@ class APIHomeView(APIView):
 				"count": Product.objects.all().count(),
 				"url": api_reverse("products_api", request=request)
 			},
+			"slides": {
+				"count": Slide.objects.all().count(),
+				"url": api_reverse("slides_api", request=request)
+			},
 			"categories": {
 				"count": Category.objects.all().count(),
 				"url": api_reverse("categories_api", request=request)
+			},
+			"categoriesByProduct": {
+				"count": Category.objects.all().count(),
+				"url": api_reverse("categories_by_product_api", request=request)
 			},
 			"homeCategories": {
 				"count": HomeCategory.objects.all().count(),
@@ -126,6 +136,17 @@ class CategoryRetrieveAPIView(generics.RetrieveAPIView):
 	serializer_class = CategorySerializer
 
 
+class CategoryByProductListAPIView(generics.ListAPIView):
+	queryset = Category.objects.all()
+	serializer_class = CategoryByProductSerializer
+
+class CategoryByProductRetrieveAPIView(generics.RetrieveAPIView):
+    	#authentication_classes = [SessionAuthentication]
+	#permission_classes = [IsAuthenticated]
+	queryset = Category.objects.all()
+	serializer_class = CategoryByProductSerializer
+
+
 # Home Category APIs
 class HomeCategoryListAPIView(generics.ListAPIView):
 	queryset = HomeCategory.objects.all()
@@ -163,6 +184,17 @@ class ProductRetrieveAPIView(generics.RetrieveAPIView):
 # class ProductCreateAPIView(generics.CreateAPIView):
 # 	queryset = Product.objects.all()
 # 	serializer_class = ProductDetailUpdateSerializer
+
+
+class SlideListAPIView(generics.ListAPIView):
+	queryset = Slide.objects.all()
+	serializer_class = SlideSerializer
+
+
+
+class SlideRetrieveAPIView(generics.RetrieveAPIView):
+	queryset = Slide.objects.all()
+	serializer_class = SlideSerializer
 
 
 

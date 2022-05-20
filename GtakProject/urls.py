@@ -34,10 +34,14 @@ from products.views import (
         APIHomeView,
         CategoryListAPIView,
         CategoryRetrieveAPIView,
+        CategoryByProductListAPIView,
+        CategoryByProductRetrieveAPIView,
         ProductListAPIView,
         ProductRetrieveAPIView,
         HomeCategoryListAPIView,
-        HomeCategoryRetrieveAPIView
+        HomeCategoryRetrieveAPIView, 
+        SlideListAPIView,
+        SlideRetrieveAPIView
     )
 from rest_framework.authtoken import views
 
@@ -86,12 +90,18 @@ urlpatterns += [
     path('api/categories/', CategoryListAPIView.as_view(), name='categories_api'),
     path('api/categories/<int:pk>/', CategoryRetrieveAPIView.as_view(), name='category_detail_api'),
 
+    path('api/categoriesByProduct/', CategoryByProductListAPIView.as_view(), name='categories_by_product_api'),
+    path('api/categoriesByProduct/<int:pk>/', CategoryByProductRetrieveAPIView.as_view(), name='category_by_product_detail_api'),
+
     path('api/home-categories/', HomeCategoryListAPIView.as_view(), name='homeCategories_api'),
     path('api/home-categories/<int:pk>/', HomeCategoryRetrieveAPIView.as_view(), name='homeCategory_detail_api'),
     # path('api/orders/', OrderListAPIView.as_view(), name='orders_api'),
     # path('api/orders/(?P<pk>\d+)/', OrderRetrieveAPIView.as_view(), name='order_detail_api'),
     path('api/products/', ProductListAPIView.as_view(), name='products_api'),
     path('api/products/<int:pk>/', ProductRetrieveAPIView.as_view(), name='products_detail_api'),
+
+    path('api/slides/', SlideListAPIView.as_view(), name='slides_api'),
+    path('api/slides/<int:pk>/', SlideRetrieveAPIView.as_view(), name='slides_detail_api'),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
