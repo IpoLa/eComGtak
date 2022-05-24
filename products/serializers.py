@@ -100,10 +100,24 @@ class CategorySerializer(serializers.ModelSerializer):
 		]
 
 
+class ProdByCatSerializer(serializers.ModelSerializer):
+    	# url = serializers.HyperlinkedIdentityField(view_name='products_detail_api')
+	# variation_set = VariationSerializer(many=True)
+	image = serializers.SerializerMethodField()
+	class Meta:
+		model = Product
+		fields = ["id", "title", "image", "description", "price"]
+
+	def get_image(self, obj):
+		try:
+			return obj.productimage_set.first().image.url
+		except:
+			return None
+
 
 class CategoryByProductSerializer(serializers.ModelSerializer):
     	# url = serializers.HyperlinkedIdentityField(view_name='category_detail_api')
-	product_set = ProductSerializer(many=True)
+	product_set = ProdByCatSerializer(many=True)
 	class Meta:
 		model = Category
 		fields = [

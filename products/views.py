@@ -126,7 +126,7 @@ class APIHomeView(APIView):
 class CategoryListAPIView(generics.ListAPIView):
 	queryset = Category.objects.all()
 	serializer_class = CategorySerializer
-	pagination_class = CategoryPagination
+	# pagination_class = CategoryPagination
 
 
 class CategoryRetrieveAPIView(generics.RetrieveAPIView):
@@ -151,7 +151,7 @@ class CategoryByProductRetrieveAPIView(generics.RetrieveAPIView):
 class HomeCategoryListAPIView(generics.ListAPIView):
 	queryset = HomeCategory.objects.all()
 	serializer_class = HomeCategorySerializer
-	pagination_class = CategoryPagination
+	# pagination_class = CategoryPagination
 
 
 class HomeCategoryRetrieveAPIView(generics.RetrieveAPIView):
